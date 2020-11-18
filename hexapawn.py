@@ -176,6 +176,21 @@ def partita():
                 return
             drawgrid(board)
             turn = turn + 1
-
-for i in range(0,5):
+print("Welcome to hexapawn! In this game you will compete against an AI that gets stronger and stronger\n"+
+      "-------------------------------------\n"+
+      "The rules are simple:\n"+
+      "- you control the O\n"+
+      "- you can move them as pawns in chess (you can go "+
+      "in the cell in front of you if it is free or you can capture an X if it is in a diagonal cell from yours)\n"+
+      "- to move a pawn, you have to first type the row and column of the pawn you want to move (when you'll "+
+      "be prompted, type the row number, hit space, then write the column number). Then you'll be asked "+
+      "where do you want to move that pawn to (it works in the exact same way)\n"+
+      "-------------------------------------\n"+
+      " A player wins if:\n"+
+      "- one of his/her pawns arrives to the other side of the board\n"+
+      "- the opponent has no pieces left\n"+
+      "- the opponent has no valid moves left\n"+
+      "-------------------------------------\n")
+rounds = input("How many rounds do you want to play? ")
+for i in range(0,rounds):
     partita()
