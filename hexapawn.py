@@ -84,6 +84,8 @@ data=(
 )
      
 moves = pd.DataFrame(data=data, columns=['turn', 'state', 'moves'])
+playerwins = 0
+computerwins = 0
 
 def checkwin(board, symbol):
     count = 0
@@ -98,7 +100,7 @@ def checkwin(board, symbol):
     
     if(count == 0):
         return 1
-        
+    
     for i in range(3):
         for j in range(3):
             if (board[i][j] == 'O'):
@@ -120,6 +122,8 @@ def partita():
     board = ['X' for x in range(3)],[' ' for x in range(3,6)],['O' for x in range(6,9)]
     drawgrid(board)
     global moves
+    global playerwins
+    global computerwins
     turn = 1
     while(True):
         if (turn%2==1):   
@@ -148,8 +152,14 @@ def partita():
                 j1 = int(j1)
             board = makemove(board,i0,j0,i1,j1)
             if(checkwin(board, 'X')):
+                print("\n########################\n")
                 print("You won!")
+                print("\n########################\n")
                 drawgrid(board)
+                print("\n########################\n")
+                playerwins = playerwins + 1
+                print("Player: "+str(playerwins)+" - Computer: "+str(computerwins))
+                print("\n########################\n")
                 moves['moves'][moveindex].remove(todomove)
                 return
             drawgrid(board)
@@ -161,18 +171,35 @@ def partita():
                     if (len(moves['moves'][a]) > 0):
                         bead = random.randint(0, len(moves['moves'][a])-1)
                         todomove = moves['moves'][a][bead]
-                    elif (len(moves['moves'][a]) == 0):
-                        todomove = moves['moves'][a]
+                    # elif (len(moves['moves'][a]) == 1):
+                    #     todomove = moves['moves'][a]
                     if (type(todomove)==list):
                         i0 = todomove[0]
                         j0 = todomove[1]
                         i1 = todomove[2]
                         j1 = todomove[3]
                     board = makemove(board, i0, j0, i1, j1)
+                # else:
+                #     if (a==len(moves)-1):
+                #         print("\n########################\n")
+                #         print("You won!")
+                #         print("\n########################\n")
+                #         drawgrid(board)
+                #         print("\n########################\n")
+                #         playerwins = playerwins + 1
+                #         print("Player: "+str(playerwins)+" - Computer: "+str(computerwins))
+                #         print("\n########################\n")
+                #         return
             
             if(checkwin(board, 'O')):
+                print("\n########################\n")
                 print("The computer won!")
+                print("\n########################\n")
                 drawgrid(board)
+                print("\n########################\n")
+                computerwins = computerwins + 1
+                print("Player: "+str(playerwins)+" - Computer: "+str(computerwins))
+                print("\n########################\n")
                 return
             drawgrid(board)
             turn = turn + 1
@@ -192,5 +219,5 @@ print("Welcome to hexapawn! In this game you will compete against an AI that get
       "- the opponent has no valid moves left\n"+
       "-------------------------------------\n")
 rounds = input("How many rounds do you want to play? ")
-for i in range(0,rounds):
+for i in range(0,int(rounds)):
     partita()
